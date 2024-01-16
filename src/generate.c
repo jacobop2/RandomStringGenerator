@@ -5,19 +5,29 @@ enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLen
     int bufValueCount = 0;
     for ( int i = 0; i < bufLength; i++ )
     {
-        if ( poolBuffer[i] != 0 ) bufValueCount++;
+        if ( poolBuffer[i] == 5 )
+        {
+            bufValueCount = NUM_CHARACTER_POOLS - 1;
+            break;
+        } 
+        else if ( poolBuffer[i] != 0 ) bufValueCount++;
+
     }
 
     srand( time( NULL ) );
 
     for ( int j = 0; j < stringLength; j++ )
     {
-        int poolIdx = rand() % bufValueCount + 1;
+        int poolIdx = rand() % bufValueCount;
         int pool = -1;
 
-        if ( 0 <= poolIdx && poolIdx < bufLength )
+        if ( 4 == bufValueCount )
         {
-            pool = poolBuffer[poolIdx];
+            pool = poolIdx;
+        }
+        else if ( 0 <= poolIdx && poolIdx < bufLength )
+        {
+            pool = poolBuffer[poolIdx] - 1;
         }
         else
         {
