@@ -16,8 +16,29 @@ enum Status {
     INVALID_INPUT
 };
 
+/*
+    placeCharPool: 
+    output: 0 = successful placement
+            1 = unsuccessful placement
+    input: int buffer[] = buffer containing current assortment of character pools
+           int bufLength = int representing the length of the buffer
+           int charPoolID = int representing the ID of the character pool to be placed
+    note: buffer is filled from index 0 to length
+*/
 int placeCharPool( int buffer[], int bufLength, int charPoolID );
 
-enum Status processLengthInput( int * passwordLength );
+/*
+    processLengthInput: 
+    output: Status code 
+    input: int * passwordLength = buffer to be filled with the user input password length
+*/
+enum Status processLengthInput( int * stringLength );
 
+/*
+    processCharacterPoolInput: 
+    output: Status code
+    input: int buffer[] = buffer cwhich will be filled with the selected character pools
+           int bufLength = int representing the length of the buffer
+    note: buffer is filled from index 0 to length
+*/
 enum Status processCharacterPoolInput( int * buffer, int bufLength );

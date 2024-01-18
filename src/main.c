@@ -5,15 +5,15 @@ int main ()
 {
     printf( "Welcome to the Password Generator\n" );
 
-    int passwordLength = 0;
+    int stringLength = 0;
 
-    if ( SUCCESS != processLengthInput( &passwordLength ) )
+    if ( SUCCESS != processLengthInput( &stringLength ) )
     {
         printf( "ERROR: failed to process the password length input, quitting..." );
         return 0;
     }
 
-    printf( "The generated password will be length %d.\n", passwordLength );
+    printf( "The generated password will be length %d.\n", stringLength );
 
     int buf[NUM_CHARACTER_POOLS];
 
@@ -30,13 +30,13 @@ int main ()
 
     char * stringBuffer;
 
-    if ( SUCCESS != generateRandomString( buf, NUM_CHARACTER_POOLS, passwordLength, stringBuffer ) )
+    if ( SUCCESS != generateRandomString( buf, NUM_CHARACTER_POOLS, stringLength, stringBuffer ) )
     {
         printf( "ERROR: failed to generate the random string, quitting..." );
         return 0;
     }
 
-    printf( "Randomly generated string: <%s>", stringBuffer );
+    printf( "Randomly generated string: %s", stringBuffer );
 
     return 0;
 }

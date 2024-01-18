@@ -3,20 +3,21 @@
 int placeCharPool( int buffer[], int bufLength, int charPoolID )
 {
     int idx = 0;
-
+    // loop through character pool buffer
     for ( int i = 0; i < bufLength; i++ )
     {
+        // if the buffer contains an empty location, place the ID and return
         if ( 0 == buffer[i] )
         {
             buffer[i] = charPoolID;
             return 1;
         }
+        // else if the ID has already been placed, return failure
         else if ( charPoolID == buffer[i] ) 
         {
             return 0;
         }
     }
-
     return 0;
 }
 
@@ -25,6 +26,7 @@ enum Status processLengthInput( int * passwordLength )
     
     printf( "Please enter the desired length for the password:\n" );
 
+    // run until a user input is received
     while (1) 
     {
         if ( 1 != scanf( "%d", passwordLength ) )
@@ -44,6 +46,7 @@ enum Status processLengthInput( int * passwordLength )
             return SUCCESS;
         }
 
+        // reset passwordLength and clear input buffer to prepare for another input
         *passwordLength = 0;
         while ( getchar() != '\n' );
     }
@@ -64,23 +67,30 @@ enum Status processCharacterPoolInput( int buffer[], int bufLength )
     int charPoolID = 0;
     int numBufVals = 0;
 
-    while ( 1 ) {
-
+    while ( 1 ) 
+    {
+        // Only accept integer inputs
         if ( 1 == scanf( "%d", &charPoolID ) ) 
         {
 
             int b_rv = 0;
 
+            // If 0 is entered, char pools finalized
             if ( 0 == charPoolID )
             {
-                if ( numBufVals != 0 ) return SUCCESS;
-                else printf( "Please select a character pool before continuing.\n" );
+                // if at least 1 char pool has been selected, return
+                if ( numBufVals != 0 ) 
+                    return SUCCESS;
+                else 
+                    printf( "Please select a character pool before continuing.\n" );
             }
+            // if the char pool is between 1 and 5, process it
             else if ( 0 < charPoolID && charPoolID < 6 )
             {
-                
+                // attempt to place the char pool into the buffer
                 b_rv = placeCharPool( buffer, bufLength, charPoolID );
 
+                // if the pool is placed, increment num placed pools and inform user
                 if ( b_rv != 0 ) 
                 {
                     printf( "Character pool number <%d> selected.\n", charPoolID );
@@ -101,7 +111,8 @@ enum Status processCharacterPoolInput( int buffer[], int bufLength )
             printf( "Invalid entry, please enter an integer corresponding to a character pool.\n" );
         }
 
-        while ( getchar() != '\n' ); // Clear input buffer
+        // Clear input buffer
+        while ( getchar() != '\n' ); 
     }
 
     // Reset charPoolID outside the loop

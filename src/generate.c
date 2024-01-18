@@ -5,26 +5,32 @@ enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLen
     int bufValueCount = 0;
     for ( int i = 0; i < bufLength; i++ )
     {
+        // If all pools have been selected, finalize bufValueCount to 4 and exit
         if ( poolBuffer[i] == 5 )
         {
             bufValueCount = NUM_CHARACTER_POOLS - 1;
             break;
         } 
+        // If a poolID is found, increment bufValueCount
         else if ( poolBuffer[i] != 0 ) bufValueCount++;
 
     }
 
     srand( time( NULL ) );
 
+    // for every character in the random string that will be generated
     for ( int j = 0; j < stringLength; j++ )
     {
+        // calculate a random pool ID between 0 and bufValueCount - 1
         int poolIdx = rand() % bufValueCount;
         int pool = -1;
 
+        // if we are selecting from all pools, assign current poolIdx to pool
         if ( 4 == bufValueCount )
         {
             pool = poolIdx;
         }
+        // otherwise, take the charPoolID at poolBuffer[poolIdx] and assign it to pool
         else if ( 0 <= poolIdx && poolIdx < bufLength )
         {
             pool = poolBuffer[poolIdx] - 1;
@@ -36,6 +42,8 @@ enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLen
         }
 
         int charIdx = 0;
+
+        // for each pool, generate a random index from the pool and assign it to the string
         switch ( pool )
         {
             case 0: 
@@ -60,6 +68,7 @@ enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLen
        }
     }
 
+    // ensure the string is terminated with a null character
     string[stringLength] = '\0';
 
     return SUCCESS;
