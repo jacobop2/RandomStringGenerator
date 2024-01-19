@@ -1,5 +1,59 @@
 #include "../include/generate.h"
 
+enum Status regenerateRandomString( int poolBuffer[], int bufLength, int stringLength, char * string )
+{
+    printf( "Press r to regenerate the password. Press s to save the password. Press any other key to exit the program.\n" );
+
+    // clear the input buffer
+    while ( getchar() != '\n' );
+
+    char regenChar;
+    while ( 1 )
+    {
+        if ( 1 == scanf( "%c", &regenChar ) ) 
+        {
+            // if r is input, generate and print another string
+            if ( 'r' == regenChar )
+            {
+                if ( SUCCESS != generateRandomString( poolBuffer, bufLength, stringLength, string ) )
+                {
+                    printf( "ERROR: failed to regenerate the random string, quitting..." );
+                    return ERROR_UNKNOWN;
+                }
+
+                // if the new string successfully prints, recursively call regenerateRandomString to prepare for next input
+                else
+                {
+                    // if QUIT is returned, immediately exit
+                    if ( QUIT == regenerateRandomString( poolBuffer, bufLength, stringLength, string ) )
+                    {
+                        return QUIT;
+                    }         
+                }
+            }
+            else if ( 's' == regenChar )
+            {
+                if ( SUCCESS != savePasswordtoFile( string ) )
+                {
+                    printf( "ERROR: Cannot save password to file, quitting..." );
+                    return ERROR_UNKNOWN;
+                }
+            }
+            else
+            {
+                return QUIT;
+            }
+        }
+        else
+        {
+            printf( "Invalid entry, please enter r to regenerate the string or any other key to exit.\n" );
+        }
+
+        // Clear input buffer
+        while ( getchar() != '\n' );
+    }
+}
+
 enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLength, char * string )
 {
     int bufValueCount = 0;
@@ -70,6 +124,8 @@ enum Status generateRandomString( int poolBuffer[], int bufLength, int stringLen
 
     // ensure the string is terminated with a null character
     string[stringLength] = '\0';
+
+    printf( "Randomly generated string: %s\n", string );
 
     return SUCCESS;
 }

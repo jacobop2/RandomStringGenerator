@@ -13,7 +13,9 @@
 
 enum Status {
     SUCCESS,
-    INVALID_INPUT
+    QUIT,
+    ERROR_INVALID_INPUT,
+    ERROR_UNKNOWN
 };
 
 /*

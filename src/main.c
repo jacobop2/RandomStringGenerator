@@ -36,7 +36,15 @@ int main ()
         return 0;
     }
 
-    printf( "Randomly generated string: %s", stringBuffer );
+    int exit = regenerateRandomString( buf, NUM_CHARACTER_POOLS, stringLength, stringBuffer );
+
+    if ( SUCCESS != exit && QUIT != exit )
+    {
+        printf( "ERROR: failed to regenerate the random string, quitting..." );
+        return 0;
+    }
+
+    printf( "Program finished, quitting..." );
 
     return 0;
 }

@@ -5,3 +5,6 @@ To run this code, compile from the main directory:
 
 Then, execute the code with:
 ```./main```
+
+
+NOTES: DOWNLOAD OPENSSL
